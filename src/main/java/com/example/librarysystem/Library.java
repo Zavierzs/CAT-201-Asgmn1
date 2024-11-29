@@ -6,23 +6,26 @@ import java.util.stream.Collectors;
 
 public class Library {
 
-    private final List<Book> books;
+    private final List<Book> library;
 
     public Library() {
-        books = new ArrayList<>();
+        library = new ArrayList<>();
     }
 
-    public void addBook(String title, String author, String isbn, boolean isAvailable, String borrower) {
-        books.add(new Book(title, author, isbn, isAvailable, borrower));
+    public void addBook(String title, String author, String isbn, boolean availability, String borrower) {
+        Book newBook = new Book(title, author, isbn);
+        newBook.setAvailability(availability);
+        newBook.setBorrower(borrower);
+        library.add(newBook);
     }
 
     public List<Book> filterBooks(String query) {
-        return books.stream()
+        return library.stream()
                 .filter(book -> book.getTitle().toLowerCase().contains(query.toLowerCase()) || book.getAuthor().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
     public List<Book> getBooks() {
-        return books;
+        return library;
     }
 }

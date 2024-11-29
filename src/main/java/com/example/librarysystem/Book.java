@@ -1,7 +1,6 @@
 package com.example.librarysystem;
 
 public class Book {
-
     private String title;
     private String author;
     private String isbn;
@@ -12,19 +11,10 @@ public class Book {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
-        this.isAvailable = true; // Default availability
+        this.isAvailable = true;
         this.borrower = "";
     }
 
-    public Book(String title, String author, String isbn, boolean isAvailable, String borrower) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.isAvailable = isAvailable;
-        this.borrower = borrower;
-    }
-
-    // Getters and Setters
     public String getTitle() {
         return title;
     }
@@ -37,7 +27,7 @@ public class Book {
         return isbn;
     }
 
-    public boolean isAvailable() {
+    public boolean getAvailablity() {
         return isAvailable;
     }
 
@@ -45,11 +35,11 @@ public class Book {
         return borrower;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setAvailability(boolean x){
+        this.isAvailable = x;
     }
 
-    public void setBorrower(String borrower) {
-        this.borrower = borrower;
+    public void setBorrower(String y){
+        this.borrower = y;
     }
 }

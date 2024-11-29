@@ -145,7 +145,7 @@ public class MainController {
     // Displays each book in the search results
     private void onAddBookButtonClick(Book book) {
         // Create UI components for each book
-        Circle resultStatus = new Circle(10, book.isAvailable() ? Color.GREEN : Color.RED);
+        Circle resultStatus = new Circle(10, book.getAvailablity() ? Color.GREEN : Color.RED);
         Label resultLabel = new Label(book.getTitle());
         Button resultButton = new Button("More Info");
 
