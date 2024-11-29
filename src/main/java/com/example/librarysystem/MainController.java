@@ -19,9 +19,11 @@ public class MainController {
     @FXML
     private GridPane dynamicResults;
     @FXML
-    private VBox dialog;
+    private VBox SearchPage;
     @FXML
     private VBox addBookDialog;
+    @FXML
+    private VBox MoreInfoDialog;
 
     @FXML
     private Label titleLabel;
@@ -42,6 +44,8 @@ public class MainController {
     private Button FindBook;
     @FXML
     private Button confirmBookButton;
+    @FXML
+    private Button searchButton;
 
     @FXML
     private TextField searchField;
@@ -59,7 +63,7 @@ public class MainController {
 
     // Initializes the controller
     public void initialize() {
-        loadBooksFromFile("Library System Data.csv");
+        loadBooksFromFile("C:\\Users\\Koh\\Documents\\Java FX\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
 
         // Set up button actions
         addBookButton.setOnAction(e -> showAddBookDialog());
@@ -67,7 +71,8 @@ public class MainController {
         borrowButton.setOnAction(e -> System.out.println("Borrow button clicked!"));
         returnButton.setOnAction(e -> System.out.println("Return button clicked!"));
         editButton.setOnAction(e -> System.out.println("Edit button clicked!"));
-        confirmBookButton.setOnAction(e -> System.out.println("confirm button clicked!"));
+        confirmBookButton.setOnAction(e -> ConfirmBook());
+        searchButton.setOnAction(e->SearchBook());
     }
 
     // Loads books from the CSV file into the library
@@ -95,7 +100,7 @@ public class MainController {
     @FXML
     private void onFindButtonClick() {
         addBookDialog.setVisible(false);// Hide the add book dialog
-        dialog.setVisible(true);
+        SearchPage.setVisible(true);
         String query = searchField.getText().trim();
 
         dynamicResults.getChildren().clear(); // Clear previous search results
@@ -119,21 +124,22 @@ public class MainController {
         titleLabel.setText(title);
         authorLabel.setText("Author: " + author);
         descriptionLabel.setText(description);
-        dialog.setVisible(true);
-        addBookDialog.setVisible(false);
+        MoreInfoDialog.setVisible(true);
     }
 
     // Show the Add Book dialog
     @FXML
     private void showAddBookDialog() {
         addBookDialog.setVisible(true);  // Show Add Book dialog
-        dialog.setVisible(false);  // Hide the details dialog
+        SearchPage.setVisible(false);  // Hide the details dialog
+        MoreInfoDialog.setVisible(false);
         System.out.print("addbook button");
     }
 
     // Adds a new book to the library from the Add Book dialog
     @FXML
-    private void addBook() {
+    private void ConfirmBook() {
+        System.out.println("confirm button clicked!");
         String bookName = bookNameField.getText().trim();
         String author = bookAuthorField.getText().trim();
         String isbn = bookIsbnField.getText().trim();
@@ -155,16 +161,16 @@ public class MainController {
         // Create UI components for each book
         Circle resultStatus = new Circle(10, book.isAvailable() ? Color.GREEN : Color.RED);
         Label resultLabel = new Label(book.getTitle());
-        Button resultButton = new Button("More Info");
+        Button MoreInfoButton = new Button("More Info");
 
         // Add an event handler for the "More Info" button
-        resultButton.setOnAction(e -> handleMoreInfo(book.getTitle(), book.getAuthor(), book.getIsbn()));
+        MoreInfoButton.setOnAction(e -> handleMoreInfo(book.getTitle(), book.getAuthor(), book.getIsbn()));
 
         // Add components to the GridPane
         int rowIndex = dynamicResults.getChildren().size() / 3;
         dynamicResults.add(resultStatus, 0, rowIndex);
         dynamicResults.add(resultLabel, 1, rowIndex);
-        dynamicResults.add(resultButton, 2, rowIndex);
+        dynamicResults.add(MoreInfoButton, 2, rowIndex);
     }
 
     // Opens the dialog to show more info about the selected book
@@ -181,6 +187,25 @@ public class MainController {
     private void showAlert(Alert.AlertType type, String message) {
         Alert alert = new Alert(type, message, ButtonType.OK);
         alert.show();
+    }
+    private void SearchBook() {
+        System.out.println("Search book clicked");
+        String query = searchField.getText().trim();
+
+        dynamicResults.getChildren().clear(); // Clear previous search results
+
+        // Get filtered list of books
+        List<Book> results = library.filterBooks(query);
+
+        if (results.isEmpty()) {
+            Label noResultsLabel = new Label("No books found");
+            dynamicResults.add(noResultsLabel, 0, 0);
+        } else {
+            // Display search results
+            for (Book book : results) {
+                onSearchBookButtonClick(book);
+            }
+        }
     }
 
 }

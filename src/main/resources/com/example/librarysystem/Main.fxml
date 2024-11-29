@@ -30,7 +30,7 @@
             </VBox>
          <StackPane prefHeight="150.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
             <children>
-                  <VBox fx:id="dialog">
+                  <VBox fx:id="SearchPage">
                       <children>
                           <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10" style="-fx-background-color: #ffffff; -fx-padding: 10;">
                               <TextField fx:id="searchField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Search" style="-fx-font-size: 14; -fx-pref-width: 300;" HBox.hgrow="ALWAYS" />
@@ -59,7 +59,7 @@
                                   </VBox>
       
                                   <!-- Dialog Layout (Hidden by default) -->
-                                  <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: lightgray; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, gray, 10, 0.5, 0, 0);" visible="false" HBox.hgrow="ALWAYS">
+                                  <VBox fx:id="MoreInfoDialog" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: lightgray; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, gray, 10, 0.5, 0, 0);" visible="false" HBox.hgrow="ALWAYS">
                                       <Label fx:id="titleLabel" style="-fx-font-size: 20; -fx-font-weight: bold;" text="I Love C++" />
                                       <Label fx:id="authorLabel" style="-fx-font-size: 14;" text="Author: ABC" />
                                       <Label fx:id="descriptionLabel" style="-fx-font-size: 14;" text="Description: Twenty-five years Dana had been waiting..." wrapText="true" />
