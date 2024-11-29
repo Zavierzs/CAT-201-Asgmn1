@@ -36,7 +36,7 @@ public class MainController {
     @FXML
     private Button returnButton;
     @FXML
-    private Button editButton;
+    private Button deleteButton;
     @FXML
     private Button addBookButton;
     @FXML
@@ -61,14 +61,14 @@ public class MainController {
 
     // Initializes the controller
     public void initialize() {
-        loadBooksFromFile("C:\\Users\\Koh\\Documents\\Java FX\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
+        loadBooksFromFile("C:\\Users\\junli\\IdeaProjects\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
 
         // Set up button actions
         addBookButton.setOnAction(e -> showAddBookDialog());
         FindBook.setOnAction(e -> onFindButtonClick());
         borrowButton.setOnAction(e -> System.out.println("Borrow button clicked!"));
         returnButton.setOnAction(e -> System.out.println("Return button clicked!"));
-        editButton.setOnAction(e -> System.out.println("Edit button clicked!"));
+        deleteButton.setOnAction(e -> System.out.println("Delete button clicked!"));
         confirmBookButton.setOnAction(e -> ConfirmBook());
         searchButton.setOnAction(e->SearchBook());
     }
@@ -115,7 +115,6 @@ public class MainController {
             }
         }
     }
-
     // Shows the book details dialog when more info is requested
     private void showDialog(String title, String author, String description) {
         titleLabel.setText(title);
@@ -131,6 +130,14 @@ public class MainController {
         SearchPage.setVisible(false);  // Hide the details dialog
         MoreInfoDialog.setVisible(false);
         System.out.print("addbook button");
+    }
+
+    @FXML
+    private void clearFields() {
+        // Clear input fields
+        bookNameField.clear();
+        bookAuthorField.clear();
+        bookIsbnField.clear();
     }
 
     // Adds a new book to the library from the Add Book dialog
@@ -149,7 +156,9 @@ public class MainController {
 
         // Add the book to the library
         library.addBook(bookName, author, isbn, true, "");
+        library.sortBooksByTitle();
         onSearchBookButtonClick(new Book(bookName, author, isbn));  // Add to UI
+        clearFields();
         closeAddBookDialog();
     }
 
@@ -204,5 +213,4 @@ public class MainController {
             }
         }
     }
-
 }

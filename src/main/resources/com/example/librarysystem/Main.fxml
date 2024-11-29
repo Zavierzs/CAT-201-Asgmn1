@@ -73,7 +73,7 @@
                                       <HBox alignment="CENTER" spacing="10">
                                           <Button fx:id="borrowButton" text="Borrow" />
                                           <Button fx:id="returnButton" text="Return" />
-                                          <Button fx:id="editButton" text="Edit" />
+                                          <Button fx:id="deleteButton" text="Delete" />
                                       </HBox>
                                   </VBox>
                               </children>
