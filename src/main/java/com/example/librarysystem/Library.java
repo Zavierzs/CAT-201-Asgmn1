@@ -2,34 +2,27 @@ package com.example.librarysystem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Library {
 
-    private List<Book> library = new ArrayList<>();
+    private final List<Book> books;
 
-    public Library() {}
-
-    public void addBook(String title, String author, String isbn) {
-        Book newBook = new Book(title, author, isbn);
-        newBook.setAvailability(true);
-        newBook.setBorrower("");
-        library.add(newBook);
+    public Library() {
+        books = new ArrayList<>();
     }
 
-    public void addBook(String title, String author, String isbn, boolean availability, String borrower) {
-        Book newBook = new Book(title, author, isbn);
-        newBook.setAvailability(availability);
-        newBook.setBorrower(borrower);
-        library.add(newBook);
+    public void addBook(String title, String author, String isbn, boolean isAvailable, String borrower) {
+        books.add(new Book(title, author, isbn, isAvailable, borrower));
     }
 
     public List<Book> filterBooks(String query) {
-        List<Book> searchResults = new ArrayList<>();
-        for (Book book : library) {
-            if (book.getTitle().toLowerCase().contains(query.toLowerCase())) {
-                searchResults.add(book);
-            }
-        }
-        return searchResults;
+        return books.stream()
+                .filter(book -> book.getTitle().toLowerCase().contains(query.toLowerCase()) || book.getAuthor().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Book> getBooks() {
+        return books;
     }
 }
