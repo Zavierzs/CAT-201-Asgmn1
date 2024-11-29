@@ -55,7 +55,7 @@ public class MainController {
 
     // Initializes the controller
     public void initialize() {
-        loadBooksFromFile("com/example/librarysystem/Library System Data.csv");
+        loadBooksFromFile("C:\\Users\\junli\\IdeaProjects\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
 
         // Set up button actions
         addBookButton.setOnAction(e -> showAddBookDialog());
@@ -67,7 +67,7 @@ public class MainController {
 
     // Loads books from the CSV file into the library
     private void loadBooksFromFile(String fileName) {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\junli\\IdeaProjects\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv"))){
             String line;
             br.readLine(); // Skip header
             while ((line = br.readLine()) != null) {
@@ -90,23 +90,29 @@ public class MainController {
     @FXML
     private void onSearchButtonClick() {
         addBookDialog.setVisible(false);  // Hide the add book dialog
-        String query = searchField.getText().trim();
+        String query = searchField.getText().trim();  // Trim the search query
 
-        dynamicResults.getChildren().clear(); // Clear previous search results
+        // Clear previous search results
+        dynamicResults.getChildren().clear();
 
-        // Get filtered list of books
+        // Get the filtered list of books from the library
         List<Book> results = library.filterBooks(query);
 
         if (results.isEmpty()) {
+            // Display a "No results found" label
             Label noResultsLabel = new Label("No books found");
             dynamicResults.add(noResultsLabel, 0, 0);
         } else {
-            // Display search results
+            // Display search results dynamically
             for (Book book : results) {
-                onAddBookButtonClick(book);
+                addBookRow(book);  // Display each book
             }
         }
     }
+
+    private void addBookRow(com.example.librarysystem.Book book) {
+    }
+
 
     // Shows the book details dialog when more info is requested
     private void showDialog(String title, String author, String description) {
