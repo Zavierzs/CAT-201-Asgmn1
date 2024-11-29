@@ -7,7 +7,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -56,7 +55,6 @@ public class MainController {
     @FXML
     private TextField bookIsbnField;
     @FXML
-    private TextArea bookDescriptionField;
 
     // Library instance
     private final Library library = new Library();
@@ -102,7 +100,6 @@ public class MainController {
         addBookDialog.setVisible(false);// Hide the add book dialog
         SearchPage.setVisible(true);
         String query = searchField.getText().trim();
-
         dynamicResults.getChildren().clear(); // Clear previous search results
 
         // Get filtered list of books

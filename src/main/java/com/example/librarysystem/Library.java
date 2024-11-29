@@ -22,7 +22,4 @@ public class Library {
                 .collect(Collectors.toList());
     }
 
-    public List<Book> getBooks() {
-        return books;
-    }
 }
