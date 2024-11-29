@@ -1,6 +1,5 @@
 package com.example.librarysystem;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -8,6 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -39,7 +39,9 @@ public class MainController {
     @FXML
     private Button addBookButton;
     @FXML
-    private Button searchBookButton;
+    private Button FindBook;
+    @FXML
+    private Button confirmBookButton;
 
     @FXML
     private TextField searchField;
@@ -49,20 +51,23 @@ public class MainController {
     private TextField bookAuthorField;
     @FXML
     private TextField bookIsbnField;
+    @FXML
+    private TextArea bookDescriptionField;
 
     // Library instance
     private final Library library = new Library();
 
     // Initializes the controller
     public void initialize() {
-        loadBooksFromFile("com/example/librarysystem/Library System Data.csv");
+        loadBooksFromFile("Library System Data.csv");
 
         // Set up button actions
         addBookButton.setOnAction(e -> showAddBookDialog());
-        searchBookButton.setOnAction(e -> onSearchButtonClick());
+        FindBook.setOnAction(e -> onFindButtonClick());
         borrowButton.setOnAction(e -> System.out.println("Borrow button clicked!"));
         returnButton.setOnAction(e -> System.out.println("Return button clicked!"));
         editButton.setOnAction(e -> System.out.println("Edit button clicked!"));
+        confirmBookButton.setOnAction(e -> System.out.println("confirm button clicked!"));
     }
 
     // Loads books from the CSV file into the library
@@ -88,8 +93,9 @@ public class MainController {
 
     // Search for books based on the query entered in the search field
     @FXML
-    private void onSearchButtonClick() {
-        addBookDialog.setVisible(false);  // Hide the add book dialog
+    private void onFindButtonClick() {
+        addBookDialog.setVisible(false);// Hide the add book dialog
+        dialog.setVisible(true);
         String query = searchField.getText().trim();
 
         dynamicResults.getChildren().clear(); // Clear previous search results
@@ -103,7 +109,7 @@ public class MainController {
         } else {
             // Display search results
             for (Book book : results) {
-                onAddBookButtonClick(book);
+                onSearchBookButtonClick(book);
             }
         }
     }
@@ -118,9 +124,11 @@ public class MainController {
     }
 
     // Show the Add Book dialog
+    @FXML
     private void showAddBookDialog() {
-        addBookDialog.setVisible(true);
-        dialog.setVisible(false);
+        addBookDialog.setVisible(true);  // Show Add Book dialog
+        dialog.setVisible(false);  // Hide the details dialog
+        System.out.print("addbook button");
     }
 
     // Adds a new book to the library from the Add Book dialog
@@ -138,12 +146,12 @@ public class MainController {
 
         // Add the book to the library
         library.addBook(bookName, author, isbn, true, "");
-        onAddBookButtonClick(new Book(bookName, author, isbn));  // Add to UI
+        onSearchBookButtonClick(new Book(bookName, author, isbn));  // Add to UI
         closeAddBookDialog();
     }
 
     // Displays each book in the search results
-    private void onAddBookButtonClick(Book book) {
+    private void onSearchBookButtonClick(Book book) {
         // Create UI components for each book
         Circle resultStatus = new Circle(10, book.isAvailable() ? Color.GREEN : Color.RED);
         Label resultLabel = new Label(book.getTitle());
@@ -166,7 +174,7 @@ public class MainController {
 
     // Closes the Add Book dialog
     private void closeAddBookDialog() {
-        addBookDialog.setVisible(false);
+        addBookDialog.setVisible(false);  // Hide Add Book dialog after adding the book
     }
 
     // Displays an alert message
@@ -175,8 +183,4 @@ public class MainController {
         alert.show();
     }
 
-    // Placeholder for future search button event (if needed)
-    public void onSearchBookButtonClick(ActionEvent actionEvent) {
-        // Additional functionality can go here
-    }
 }
