@@ -1,5 +1,9 @@
 package com.example.librarysystem;
 
+import javafx.scene.control.Alert;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,20 +13,44 @@ import java.util.stream.Collectors;
 
 public class Library {
 
-    private final List<Book> books;
+    private final List<Book> library;
 
     public Library() {
-        books = new ArrayList<>();
+        library = new ArrayList<>();
+    }
+
+    private static final MainController controller = new MainController();
+
+    // Loads books from the CSV file into the library
+    public void loadBooksFromCSV(String fileName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            br.readLine(); // Skip header
+            while ((line = br.readLine()) != null) {
+                String[] bookData = line.split(",");
+                if (bookData.length == 5) {
+                    String title = bookData[0];
+                    String author = bookData[1];
+                    String isbn = bookData[2];
+                    boolean isAvailable = Boolean.parseBoolean(bookData[3]);
+                    String borrower = bookData[4];
+                    addBook(title, author, isbn, isAvailable, borrower);
+                }
+            }
+        } catch (IOException e) {
+            controller.showAlert(Alert.AlertType.ERROR, "Error reading the CSV file: " + e.getMessage());
+        }
     }
 
     public void saveBooksToCSV() {
         sortBooksByTitle();
-        try (FileWriter writer = new FileWriter("C:\\Users\\junli\\IdeaProjects\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv", false)) { // 'false' to overwrite the file
+
+        try (FileWriter writer = new FileWriter("src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv", false)) {
             // Write the CSV header (optional)
             writer.append("Title,Author,ISBN,Available,Borrower\n");
 
             // Write data for each book in the books list
-            for (Book book : books) {
+            for (Book book : library) {
                 writer.append(book.getTitle()).append(",")
                         .append(book.getAuthor()).append(",")
                         .append(book.getIsbn()).append(",")
@@ -31,28 +59,49 @@ public class Library {
             }
             System.out.println("All books saved to CSV.");
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Failed to save books to CSV.");
+            controller.showAlert(Alert.AlertType.ERROR, "Failed to save books to CSV: " + e.getMessage());
         }
     }
+
+
+
     public void addBook(String title, String author, String isbn, boolean isAvailable, String borrower) {
 
         // Add book to the list
-        books.add(new Book(title, author, isbn, isAvailable, borrower));
+        library.add(new Book(title, author, isbn, isAvailable, borrower));
 
         // Sort books after adding
         sortBooksByTitle();
         saveBooksToCSV();
     }
 
+    public void deleteBook(String bookTitle) {
+        Book bookToDelete = null;
+
+        for (Book book : library) {
+            if (book.getTitle().equals(bookTitle)) {
+                bookToDelete = book;
+                break;
+            }
+        }
+
+        if (bookToDelete != null) {
+            library.remove(bookToDelete);
+            saveBooksToCSV();
+            controller.showAlert(Alert.AlertType.INFORMATION, "Book deleted successfully.");
+        } else {
+            controller.showAlert(Alert.AlertType.WARNING, "Book not found.");
+        }
+    }
+
     public List<Book> filterBooks(String query) {
-        return books.stream()
+        return library.stream()
                 .filter(book -> book.getTitle().toLowerCase().contains(query.toLowerCase()) || book.getAuthor().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
     public void sortBooksByTitle() {
         // Sort books by title
-        books.sort(Comparator.comparing(Book::getTitle));
+        library.sort(Comparator.comparing(Book::getTitle));
     }
 }

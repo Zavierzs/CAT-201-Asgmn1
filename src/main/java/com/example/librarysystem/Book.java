@@ -8,14 +8,6 @@ public class Book {
     private boolean isAvailable;
     private String borrower;
 
-    public Book(String title, String author, String isbn) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.isAvailable = true; // Default availability
-        this.borrower = "";
-    }
-
     public Book(String title, String author, String isbn, boolean isAvailable, String borrower) {
         this.title = title;
         this.author = author;

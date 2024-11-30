@@ -39,8 +39,12 @@
                               <TextField fx:id="searchField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Search" style="-fx-font-size: 14; -fx-pref-width: 300;" HBox.hgrow="ALWAYS" />
                               <Button fx:id="searchButton" text="Search" />
                               <HBox alignment="CENTER_RIGHT" spacing="10">
-                                  <Label fx:id="usernameLabel" text="Username" />
-                                  <Circle fx:id="profileCircle" fill="#00bcd4" radius="15" />
+                                  <Label fx:id="usernameLabel" text="Admin" style="-fx-font-weight: bold;"/>
+                                  <ImageView fx:id="profileImageView" styleClass="profile-image" fitWidth="50" fitHeight="50">
+                                      <image>
+                                          <Image url="@/ProfilePic.png" />
+                                      </image>
+                                  </ImageView>
                               </HBox>
                           </HBox>
                           <HBox fx:id="" style="-fx-background-color: WHITE; -fx-padding: 20; -fx-border-color: LIGHTGREY; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, gray, 10, 0.5, 0, 0);" VBox.vgrow="ALWAYS">

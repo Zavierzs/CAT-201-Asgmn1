@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -14,7 +15,9 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/librarysystem/Main.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("Library System");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        Image icon = new Image("Book_Icon.png");
+        primaryStage.getIcons().add(icon);
+        primaryStage.setScene(new Scene(root, 1200, 700));
         primaryStage.show();
     }
 

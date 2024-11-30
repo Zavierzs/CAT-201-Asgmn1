@@ -61,7 +61,7 @@ public class MainController {
 
     // Initializes the controller
     public void initialize() {
-        loadBooksFromFile("C:\\Users\\junli\\IdeaProjects\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
+        library.loadBooksFromCSV("D:\\Coding\\JunCat\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
 
         // Set up button actions
         addBookButton.setOnAction(e -> showAddBookDialog());
@@ -73,26 +73,7 @@ public class MainController {
         searchButton.setOnAction(e->SearchBook());
     }
 
-    // Loads books from the CSV file into the library
-    private void loadBooksFromFile(String fileName) {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            br.readLine(); // Skip header
-            while ((line = br.readLine()) != null) {
-                String[] bookData = line.split(",");
-                if (bookData.length == 5) {
-                    String title = bookData[0];
-                    String author = bookData[1];
-                    String isbn = bookData[2];
-                    boolean isAvailable = Boolean.parseBoolean(bookData[3]);
-                    String borrower = bookData[4];
-                    library.addBook(title, author, isbn, isAvailable, borrower);
-                }
-            }
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Error reading the CSV file: " + e.getMessage());
-        }
-    }
+
 
     // Search for books based on the query entered in the search field
     @FXML
@@ -154,12 +135,25 @@ public class MainController {
             return;
         }
 
+        // Validate ISBN format (e.g., 13-digit ISBN)
+        if (!isValidISBN(isbn)) {
+            showAlert(Alert.AlertType.ERROR, "Invalid ISBN format. Please enter a valid 9-digit ISBN.");
+            return;
+        }
+
         // Add the book to the library
         library.addBook(bookName, author, isbn, true, "");
         library.sortBooksByTitle();
-        onSearchBookButtonClick(new Book(bookName, author, isbn));  // Add to UI
+        onSearchBookButtonClick(new Book(bookName, author, isbn,true, ""));  // Add to UI
         clearFields();
         closeAddBookDialog();
+    }
+
+    private boolean isValidISBN(String isbn) {
+        // Implement ISBN validation logic here
+        // You can use regular expressions or other validation techniques
+        // For example, a simple check for 13 digits:
+        return isbn.matches("\\d{9}");
     }
 
     // Displays each book in the search results
@@ -190,7 +184,7 @@ public class MainController {
     }
 
     // Displays an alert message
-    private void showAlert(Alert.AlertType type, String message) {
+    public void showAlert(Alert.AlertType type, String message) {
         Alert alert = new Alert(type, message, ButtonType.OK);
         alert.show();
     }
