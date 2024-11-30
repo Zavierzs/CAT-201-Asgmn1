@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.MainController">
@@ -28,7 +27,7 @@
                     </image>
                 </ImageView>
                 <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="Library System" />
-                <Button fx:id="addBookButton" onAction="#showAddBookDialog" text="Add Book" />
+                <Button fx:id="addBookButton" text="Add Book" />
                 <Button fx:id="FindBook" onAction="#onFindButtonClick" text="Find book" />
             </VBox>
          <StackPane prefHeight="150.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
@@ -39,8 +38,8 @@
                               <TextField fx:id="searchField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Search" style="-fx-font-size: 14; -fx-pref-width: 300;" HBox.hgrow="ALWAYS" />
                               <Button fx:id="searchButton" text="Search" />
                               <HBox alignment="CENTER_RIGHT" spacing="10">
-                                  <Label fx:id="usernameLabel" text="Admin" style="-fx-font-weight: bold;"/>
-                                  <ImageView fx:id="profileImageView" styleClass="profile-image" fitWidth="50" fitHeight="50">
+                                  <Label fx:id="usernameLabel" style="-fx-font-weight: bold;" text="Admin" />
+                                  <ImageView fx:id="profileImageView" fitHeight="50" fitWidth="50" styleClass="profile-image">
                                       <image>
                                           <Image url="@/ProfilePic.png" />
                                       </image>
@@ -53,49 +52,68 @@
                                       <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Search Results:" />
                               <ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                                  <content>
-                                            <GridPane fx:id="dynamicResults">
+                                            <GridPane fx:id="dynamicResults" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308">
                                                 <columnConstraints>
-                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="34.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="271.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="60.0" />
+                                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="95.0" minWidth="10.0" prefWidth="34.0" />
+                                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="299.0" minWidth="10.0" prefWidth="299.0" />
+                                                    <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="165.0" minWidth="10.0" prefWidth="100.0" />
                                                 </columnConstraints>
                                                 <rowConstraints>
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                 </rowConstraints>
+                                       <opaqueInsets>
+                                          <Insets left="10.0" right="10.0" />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
                                             </GridPane>
                                  </content>
                               </ScrollPane>
                                   </VBox>
-      
-                                  <!-- Dialog Layout (Hidden by default) -->
-                                  <VBox fx:id="MoreInfoDialog" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: lightgray; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, gray, 10, 0.5, 0, 0);" visible="false" HBox.hgrow="ALWAYS">
-                                      <Label fx:id="titleLabel" style="-fx-font-size: 20; -fx-font-weight: bold;" text="I Love C++" />
-                                      <Label fx:id="authorLabel" style="-fx-font-size: 14;" text="Author: ABC" />
-                                      <Label fx:id="descriptionLabel" style="-fx-font-size: 14;" text="Description: Twenty-five years Dana had been waiting..." wrapText="true" />
-                                      <HBox alignment="CENTER" spacing="10">
-                                          <Button fx:id="borrowButton" text="Borrow" />
-                                          <Button fx:id="returnButton" text="Return" />
-                                          <Button fx:id="deleteButton" text="Delete" />
-                                      </HBox>
-                                  </VBox>
+                           <StackPane prefHeight="150.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                              <children>
+            
+                                        <!-- Dialog Layout (Hidden by default) -->
+                                        <VBox fx:id="MoreInfoDialog" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: lightgray; -fx-border-radius: 10; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, gray, 10, 0.5, 0, 0);" visible="false">
+                                            <Label fx:id="titleLabel" style="-fx-font-size: 20; -fx-font-weight: bold;" text="I Love C++" />
+                                            <Label fx:id="authorLabel" style="-fx-font-size: 14;" text="Author: ABC" />
+                                            <Label fx:id="descriptionLabel" style="-fx-font-size: 14;" text="Description: Twenty-five years Dana had been waiting..." wrapText="true" />
+                                            <HBox alignment="CENTER" spacing="10">
+                                                <Button fx:id="borrowButton" text="Borrow" />
+                                                <Button fx:id="returnButton" text="Return" />
+                                                <Button fx:id="deleteButton" text="Delete" />
+                                            </HBox>
+                                        </VBox>
+                                 <VBox fx:id="BorrowDialog" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
+                                    <children>
+                                       <Label text="Enter Borrower's Name" />
+                                       <Label fx:id="BorrowBookLabel" text="Label" />
+                                       <Label text="Please enter the borrower's name:" />
+                                       <Button fx:id="BookBorrowConfirmButton" mnemonicParsing="false" text="Confirm" />
+                                       <TextField fx:id="borrowerNameField" />
+                                    </children>
+                                 </VBox>
+                              </children>
+                           </StackPane>
                               </children>
                           </HBox>
                       </children>
                   </VBox>
-               <VBox fx:id="addBookDialog" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: WHITE; -fx-padding: 20; -fx-border-color: LIGHTGREY; -fx-background-radius: 10; -fx-border-radius: 10; -fx-effect: dropshadow(gaussian, gray, 10, 0.5, 0, 0);" visible="false">
+               <VBox fx:id="addBookDialog" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: WHITE; -fx-padding: 20; -fx-border-color: LIGHTGREY; -fx-background-radius: 10; -fx-border-radius: 10; -fx-effect: dropshadow(gaussian, gray, 10, 0.5, 0, 0);" visible="false" StackPane.alignment="TOP_CENTER">
                   <children>
-                     <GridPane alignment="TOP_CENTER" prefHeight="500.0" prefWidth="300.0">
+                     <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
                        <columnConstraints>
-                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                         <ColumnConstraints halignment="RIGHT" minWidth="10.0" prefWidth="100.0" />
                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                        </columnConstraints>
                        <rowConstraints>
                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="ALWAYS" />
                        </rowConstraints>
                         <children>
                            <Label alignment="CENTER" contentDisplay="CENTER" text="Title: " textAlignment="CENTER">
