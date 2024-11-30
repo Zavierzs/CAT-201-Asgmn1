@@ -1,5 +1,6 @@
 package com.example.librarysystem;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -54,7 +55,9 @@ public class MainController {
     private TextField bookAuthorField;
     @FXML
     private TextField bookIsbnField;
+
     @FXML
+    private TextField borrowerNameField;
 
     // Library instance
     private final Library library = new Library();
@@ -72,8 +75,6 @@ public class MainController {
         confirmBookButton.setOnAction(e -> ConfirmBook());
         searchButton.setOnAction(e->SearchBook());
     }
-
-
 
     // Search for books based on the query entered in the search field
     @FXML
@@ -206,5 +207,18 @@ public class MainController {
                 onSearchBookButtonClick(book);
             }
         }
+    }
+
+    private void onBorrowButtonClick(Book bookToBorrow) {
+        String borrowerName = borrowerNameField.getText().trim();
+        if (borrowerName.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Please enter the borrower's name.");
+            return;
+        }
+        library.borrowBook(bookToBorrow, borrowerName);
+    }
+
+    private void onReturnButtonClick(Book bookToReturn) {
+        library.returnBook(bookToReturn);
     }
 }

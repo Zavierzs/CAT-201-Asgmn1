@@ -75,16 +75,38 @@ public class Library {
         saveBooksToCSV();
     }
 
+    public void borrowBook(Book book, String borrowerName) {
+        if (book.isAvailable()) {
+            book.setAvailable(false);
+            book.setBorrower(borrowerName);
+            saveBooksToCSV();
+            //updateBookStatusInUI(bookToBorrow);
+            controller.showAlert(Alert.AlertType.INFORMATION, "Book borrowed successfully.");
+        } else {
+            controller.showAlert(Alert.AlertType.WARNING, "Book is already borrowed.");
+        }
+    }
+
+    public void returnBook(Book book) {
+        if (!book.isAvailable()) {
+            book.setAvailable(true);
+            book.setBorrower("");
+            saveBooksToCSV();
+            //updateBookStatusInUI(bookToReturn);
+            controller.showAlert(Alert.AlertType.INFORMATION, "Book returned successfully.");
+        } else {
+            controller.showAlert(Alert.AlertType.WARNING, "Book is already available.");
+        }
+    }
+
     public void deleteBook(String bookTitle) {
         Book bookToDelete = null;
-
         for (Book book : library) {
             if (book.getTitle().equals(bookTitle)) {
                 bookToDelete = book;
                 break;
             }
         }
-
         if (bookToDelete != null) {
             library.remove(bookToDelete);
             saveBooksToCSV();
