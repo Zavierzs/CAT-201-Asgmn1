@@ -1,6 +1,5 @@
 Title,Author,ISBN,Available,Borrower
-12121212,121,211222,true,-
-1984,George Orwell,135792468,true,-
+1984,George Orwell,135792468,false,-
 CO,Jun Liang,324552,true,-
 Dracula,Bram Stoker,813579246,true,-
 Harry Potter and the Chamber of Secrets,J.K. Rowling,468135792,true,-
@@ -10,8 +9,9 @@ Harry Potter and the Half-Blood Prince,J.K. Rowling,813579246,true,-
 Harry Potter and the Order of the Phoenix,J.K. Rowling,792468135,true,-
 Harry Potter and the Prisoner of Azkaban,J.K. Rowling,579246813,true,-
 Harry Potter and the Sorcerer's Stone,J.K. Rowling,357924681,true,-
-Hello,Koh,123456789,true,-
-Jane Eyre,Charlotte Brontë,681357924,true,-
+Hello,Koh,123456789,false,-
+Jane Eyre,Charlotte Brontë,681357924,false,-
+Java YYDS,1234,324356635,true,-
 Little Women,Louisa May Alcott,468135792,true,-
 Pride and Prejudice,Jane Austen,246813579,true,-
 SD,Jun Liang,2135635,true,-
