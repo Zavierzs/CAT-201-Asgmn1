@@ -68,7 +68,7 @@ public class MainController {
 
     // Initializes the controller
     public void initialize() {
-        library.loadBooksFromCSV("C:\\Users\\Koh\\Documents\\Java FX\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
+        library.loadBooksFromCSV("C:\\Users\\User\\IdeaProjects\\Test1Dec1\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
 
         // Set up button actions
         addBookButton.setOnAction(e -> showAddBookDialog());

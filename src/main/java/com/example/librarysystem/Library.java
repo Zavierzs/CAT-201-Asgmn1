@@ -50,7 +50,7 @@ public class Library {
     public void saveBooksToCSV() {
         sortBooksByTitle();
 
-        try (FileWriter writer = new FileWriter("C:\\Users\\Koh\\Documents\\Java FX\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv", false)) {
+        try (FileWriter writer = new FileWriter("C:\\Users\\User\\IdeaProjects\\Test1Dec1\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv", false)) {
             // Write the CSV header (optional)
             writer.append("Title,Author,ISBN,Available,Borrower\n");
 
