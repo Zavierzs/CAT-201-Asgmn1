@@ -1,16 +1,15 @@
 Title,Author,ISBN,Available,Borrower
-1984,George Orwell,135792468,false,-
-CO,Jun Liang,324552,true,-
+CO,Jun Liang,324552,false,-
 Dracula,Bram Stoker,813579246,true,-
-Harry Potter and the Chamber of Secrets,J.K. Rowling,468135792,true,-
+Harry Potter and the Chamber of Secrets,J.K. Rowling,468135792,false,-
 Harry Potter and the Deathly Hallows,J.K. Rowling,924681357,true,-
 Harry Potter and the Goblet of Fire,J.K. Rowling,681357924,true,-
 Harry Potter and the Half-Blood Prince,J.K. Rowling,813579246,true,-
 Harry Potter and the Order of the Phoenix,J.K. Rowling,792468135,true,-
 Harry Potter and the Prisoner of Azkaban,J.K. Rowling,579246813,true,-
 Harry Potter and the Sorcerer's Stone,J.K. Rowling,357924681,true,-
-Hello,Koh,123456789,false,-
-Jane Eyre,Charlotte Brontë,681357924,false,-
+Hello,Koh,123456789,true,-
+Jane Eyre,Charlotte Brontë,681357924,true,-
 Java YYDS,1234,324356635,true,-
 Little Women,Louisa May Alcott,468135792,true,-
 Pride and Prejudice,Jane Austen,246813579,true,-
@@ -23,4 +22,6 @@ The Picture of Dorian Gray,Oscar Wilde,924681357,true,-
 TheArt,Jun Liang,2234423,true,-
 To Kill a Mockingbird,Harper Lee,987654321,true,-
 Wuthering Heights,Emily Brontë,579246813,true,-
+Zacian,pokemon,874664376,true,-
+ih,hu,098765456,true,-
 wdwd,dw,wd21113,true,-

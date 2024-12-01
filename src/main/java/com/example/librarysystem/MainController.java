@@ -68,7 +68,7 @@ public class MainController {
 
     // Initializes the controller
     public void initialize() {
-        library.loadBooksFromCSV("C:\\Users\\User\\IdeaProjects\\Test1Dec1\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
+        library.loadBooksFromCSV("C:\\Users\\Koh\\Documents\\Java FX\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
 
         // Set up button actions
         addBookButton.setOnAction(e -> showAddBookDialog());
@@ -184,7 +184,7 @@ public class MainController {
             // Create UI elements for each book
             Circle resultStatus = new Circle(10, book.isAvailable() ? Color.GREEN : Color.RED);
             Label resultLabel = new Label(book.getTitle());
-            Button moreInfoButton = new Button("More Info");
+            Button moreInfoButton = new Button("More Info >");
 
             // Add event handlers for buttons
             moreInfoButton.setOnAction(e -> handleMoreInfo(book.getTitle(), book.getAuthor(), book.getIsbn(), book.isAvailable()));
