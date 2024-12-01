@@ -50,6 +50,8 @@ public class MainController {
     private Button searchButton;
     @FXML
     private Button BookBorrowConfirmButton;
+    @FXML
+    private TextField borrowerNameField;
 
     @FXML
     private TextField searchField;
@@ -60,17 +62,13 @@ public class MainController {
     @FXML
     private TextField bookIsbnField;
 
-    @FXML
-    private TextField borrowerNameField;
 
     // Library instance
     private final Library library = new Library();
 
     // Initializes the controller
     public void initialize() {
-        library.loadBooksFromCSV("C:\\Users\\User\\IdeaProjects\\Test1Dec1\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
-
-        // Set up button actions
+        library.loadBooksFromCSV();
         addBookButton.setOnAction(e -> showAddBookDialog());
         FindBook.setOnAction(e -> onFindButtonClick());
         confirmBookButton.setOnAction(e -> ConfirmBook());

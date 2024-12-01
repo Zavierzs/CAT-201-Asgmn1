@@ -27,7 +27,8 @@ public class Library {
     }
 
     // Loads books from the CSV file into the library
-    public void loadBooksFromCSV(String fileName) {
+    public void loadBooksFromCSV() {
+        String fileName = "src/main/resources/com/example/librarysystem/Library System Data.csv";
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             br.readLine(); // Skip header
@@ -50,7 +51,7 @@ public class Library {
     public void saveBooksToCSV() {
         sortBooksByTitle();
 
-        try (FileWriter writer = new FileWriter("C:\\Users\\User\\IdeaProjects\\Test1Dec1\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv", false)) {
+        try (FileWriter writer = new FileWriter("src/main/resources/com/example/librarysystem/Library System Data.csv", false)) {
             // Write the CSV header (optional)
             writer.append("Title,Author,ISBN,Available,Borrower\n");
 
@@ -67,8 +68,6 @@ public class Library {
             controller.showAlert(Alert.AlertType.ERROR, "Failed to save books to CSV: " + e.getMessage());
         }
     }
-
-
 
     public void addBook(String title, String author, String isbn, boolean isAvailable, String borrower) {
         // Add book to the list
@@ -133,12 +132,13 @@ public class Library {
 
     public List<Book> filterBooks(String query) {
         return library.stream()
-                .filter(book -> book.getTitle().toLowerCase().contains(query.toLowerCase()) || book.getAuthor().toLowerCase().contains(query.toLowerCase()))
+                .filter(book -> book.getTitle().toLowerCase().contains(query.toLowerCase())
+                        || book.getAuthor().toLowerCase().contains(query.toLowerCase())
+                        || book.getIsbn().equals(query))
                 .collect(Collectors.toList());
     }
 
     public void sortBooksByTitle() {
-        // Sort books by title
         library.sort(Comparator.comparing(Book::getTitle));
     }
 }
