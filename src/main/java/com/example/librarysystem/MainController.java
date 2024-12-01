@@ -210,6 +210,8 @@ public class MainController {
         Alert alert = new Alert(type, message, ButtonType.OK);
         alert.show();
     }
+
+    @FXML
     private void SearchBook() {
         System.out.println("Search book clicked");
         String query = searchField.getText().trim();
