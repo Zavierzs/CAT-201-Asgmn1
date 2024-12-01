@@ -5,15 +5,15 @@ public class Book {
     private String title;
     private String author;
     private String isbn;
-    private boolean isAvailable;
-    private String borrower;
+    private boolean availability;
+    private String borrowerName;
 
     public Book(String title, String author, String isbn, boolean isAvailable, String borrower) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
-        this.isAvailable = isAvailable;
-        this.borrower = borrower;
+        this.availability = isAvailable;
+        this.borrowerName = borrower;
     }
 
     // Getters and Setters
@@ -25,24 +25,16 @@ public class Book {
         return author;
     }
 
-    public String getIsbn() {
-        return isbn;
-    }
+    public String getIsbn() { return isbn; }
 
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public String getBorrower() {
-        return borrower;
-    }
+    public boolean isAvailable() { return availability; }
 
     public void setAvailable(boolean available) {
-        isAvailable = available;
+        availability = available;
     }
 
     public void setBorrower(String borrower) {
-        this.borrower = borrower;
+        this.borrowerName = borrower;
     }
 
 

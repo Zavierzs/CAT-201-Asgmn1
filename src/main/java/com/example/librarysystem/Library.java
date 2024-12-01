@@ -26,7 +26,7 @@ public class Library {
         return Collections.unmodifiableList(library);
     }
 
-    // Loads books from the CSV file into the library
+    // Read books from the CSV file into the array list
     public void loadBooksFromCSV(String fileName) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -47,14 +47,13 @@ public class Library {
         }
     }
 
+    // Write books into the CSV file from the array list
     public void saveBooksToCSV() {
         sortBooksByTitle();
 
         try (FileWriter writer = new FileWriter("C:\\Users\\User\\IdeaProjects\\Test1Dec1\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv", false)) {
-            // Write the CSV header (optional)
             writer.append("Title,Author,ISBN,Available,Borrower\n");
 
-            // Write data for each book in the books list
             for (Book book : library) {
                 writer.append(book.getTitle()).append(",")
                         .append(book.getAuthor()).append(",")
@@ -68,12 +67,8 @@ public class Library {
         }
     }
 
-
-
     public void addBook(String title, String author, String isbn, boolean isAvailable, String borrower) {
-        // Add book to the list
         library.add(new Book(title, author, isbn, isAvailable, borrower));
-        // Sort books after adding
         sortBooksByTitle();
         saveBooksToCSV();
     }
@@ -82,7 +77,6 @@ public class Library {
         if (book.isAvailable()) {
             book.setAvailable(false);
             book.setBorrower(borrowerName);
-            // Update the book in the library list
             for (int i = 0; i < library.size(); i++) {
                 if (library.get(i).getTitle().equals(book.getTitle())) {
                     library.set(i, book);
@@ -107,7 +101,6 @@ public class Library {
                 }
             }
             saveBooksToCSV();
-            //updateBookStatusInUI(bookToReturn);
             controller.showAlert(Alert.AlertType.INFORMATION, "Book returned successfully.");
         } else {
             controller.showAlert(Alert.AlertType.WARNING, "Book is already available.");
@@ -139,8 +132,8 @@ public class Library {
                 .collect(Collectors.toList());
     }
 
+    //Arrange book in alphabetical order
     public void sortBooksByTitle() {
-        // Sort books by title
         library.sort(Comparator.comparing(Book::getTitle));
     }
 }

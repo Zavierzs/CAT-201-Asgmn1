@@ -63,14 +63,11 @@ public class MainController {
     @FXML
     private TextField borrowerNameField;
 
-    // Library instance
     private final Library library = new Library();
 
-    // Initializes the controller
+    // Initialises the controller
     public void initialize() {
         library.loadBooksFromCSV("C:\\Users\\User\\IdeaProjects\\Test1Dec1\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
-
-        // Set up button actions
         addBookButton.setOnAction(e -> showAddBookDialog());
         FindBook.setOnAction(e -> onFindButtonClick());
         confirmBookButton.setOnAction(e -> ConfirmBook());
@@ -80,12 +77,11 @@ public class MainController {
     // Search for books based on the query entered in the search field
     @FXML
     private void onFindButtonClick() {
-        addBookDialog.setVisible(false);// Hide the add book dialog
+        addBookDialog.setVisible(false);
         SearchPage.setVisible(true);
         String query = searchField.getText().trim();
-        dynamicResults.getChildren().clear(); // Clear previous search results
+        dynamicResults.getChildren().clear();
 
-        // Get filtered list of books
         List<Book> results = library.filterBooks(query);
 
         if (results.isEmpty()) {
@@ -98,6 +94,7 @@ public class MainController {
             }
         }
     }
+
     // Shows the book details dialog when more info is requested
     private void showDialog(String title, String author, String description) {
         titleLabel.setText(title);
@@ -107,7 +104,6 @@ public class MainController {
         BorrowDialog.setVisible(false);
     }
 
-    // Show the Add Book dialog
     @FXML
     private void showAddBookDialog() {
         addBookDialog.setVisible(true);  // Show Add Book dialog
@@ -124,7 +120,6 @@ public class MainController {
         bookIsbnField.clear();
     }
 
-    // Adds a new book to the library from the Add Book dialog
     @FXML
     private void ConfirmBook() {
         System.out.println("confirm button clicked!");
@@ -132,22 +127,18 @@ public class MainController {
         String author = bookAuthorField.getText().trim();
         String isbn = bookIsbnField.getText().trim();
 
-        // Validate input fields
         if (bookName.isEmpty() || author.isEmpty() || isbn.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "All fields are required!");
             return;
         }
-
-        // Validate ISBN format (e.g., 13-digit ISBN)
         if (!isValidISBN(isbn)) {
             showAlert(Alert.AlertType.ERROR, "Invalid ISBN format. Please enter a valid 9-digit ISBN.");
             return;
         }
 
-        // Add the book to the library
         library.addBook(bookName, author, isbn, true, "");
         library.sortBooksByTitle();
-        onSearchBookButtonClick(new Book(bookName, author, isbn, true, ""));  // Add to UI
+        onSearchBookButtonClick(new Book(bookName, author, isbn, true, ""));
         clearFields();
         closeAddBookDialog();
         dynamicResults.getChildren().clear();
@@ -159,58 +150,48 @@ public class MainController {
 
     // Displays each book in the search results
     private void onSearchBookButtonClick(Book book) {
-        // Create UI components for each book
         Circle resultStatus = new Circle(10, book.isAvailable() ? Color.GREEN : Color.RED);
         Label resultLabel = new Label(book.getTitle());
         Button MoreInfoButton = new Button("More Info");
-
-        // Add an event handler for the "More Info" button
         MoreInfoButton.setOnAction(e -> handleMoreInfo(book.getTitle(), book.getAuthor(), book.getIsbn(), book.isAvailable()));
 
-        // Add components to the GridPane
         int rowIndex = dynamicResults.getChildren().size() / 3;
-
         dynamicResults.add(resultStatus, 0, rowIndex);
         dynamicResults.add(resultLabel, 1, rowIndex);
         dynamicResults.add(MoreInfoButton, 2, rowIndex);
-
-        adjustRowHeight(dynamicResults, rowIndex, 40); // Example height set to 40px
+        adjustRowHeight(dynamicResults, rowIndex, 40);
     }
 
+    //Refresh the list displayed on screen after borrow and return of books
     private void refreshSearchList(List<Book> books) {
         dynamicResults.getChildren().clear();
 
         for (Book book : books) {
-            // Create UI elements for each book
             Circle resultStatus = new Circle(10, book.isAvailable() ? Color.GREEN : Color.RED);
             Label resultLabel = new Label(book.getTitle());
             Button moreInfoButton = new Button("More Info >");
 
-            // Add event handlers for buttons
             moreInfoButton.setOnAction(e -> handleMoreInfo(book.getTitle(), book.getAuthor(), book.getIsbn(), book.isAvailable()));
 
-            // Add components to the GridPane
             int rowIndex = dynamicResults.getChildren().size() / 3;
             dynamicResults.add(resultStatus, 0, rowIndex);
             dynamicResults.add(resultLabel, 1, rowIndex);
             dynamicResults.add(moreInfoButton, 2, rowIndex);
 
-            // Adjust row height (optional)
             adjustRowHeight(dynamicResults, rowIndex, 40);
         }
     }
 
+    //Setting for grid pane
     private void adjustRowHeight(GridPane gridPane, int rowIndex, double height) {
-        // Ensure there are enough row constraints
         while (gridPane.getRowConstraints().size() <= rowIndex) {
             gridPane.getRowConstraints().add(new RowConstraints());
         }
-
         // Set the preferred height for the row
         RowConstraints rowConstraints = gridPane.getRowConstraints().get(rowIndex);
-        rowConstraints.setPrefHeight(height);  // Set preferred height
-        rowConstraints.setMinHeight(height);   // Optional: Set minimum height
-        rowConstraints.setMaxHeight(height);   // Optional: Set maximum height
+        rowConstraints.setPrefHeight(height);
+        rowConstraints.setMinHeight(height);
+        rowConstraints.setMaxHeight(height);
     }
 
     // Opens the dialog to show more info about the selected book
@@ -255,6 +236,7 @@ public class MainController {
         }
     }
 
+    //Function called after borrow button is clicked
     private void onBorrowButtonClick(Book bookToBorrow) {
         BorrowDialog.setVisible(true);
         MoreInfoDialog.setVisible(false);
@@ -262,6 +244,7 @@ public class MainController {
         BookBorrowConfirmButton.setOnAction(e -> BookBorrowConfirm(bookToBorrow));
     }
 
+    //Function called after borrower's name is input and confirmed to borrow
     private void BookBorrowConfirm(Book bookToBorrow) {
         String borrowerName = borrowerNameField.getText().trim();
         if (borrowerName.isEmpty()) {
@@ -272,14 +255,15 @@ public class MainController {
         BorrowDialog.setVisible(false);
         borrowerNameField.clear();
         refreshSearchList(library.getLibrary());
-
     }
 
+    //Function called after return button is clicked
     private void onReturnButtonClick(Book bookToReturn) {
         library.returnBook(bookToReturn);
         refreshSearchList(library.getLibrary());
     }
 
+    //Function called after delete button is clicked
     private void onDeleteButtonClick(String title) {
         library.deleteBook(title);
         refreshSearchList(library.getLibrary());
