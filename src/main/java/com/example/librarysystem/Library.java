@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,10 @@ public class Library {
     }
 
     private static final MainController controller = new MainController();
+
+    public List<Book> getLibrary() {
+        return Collections.unmodifiableList(library);
+    }
 
     // Loads books from the CSV file into the library
     public void loadBooksFromCSV(String fileName) {
@@ -45,7 +50,7 @@ public class Library {
     public void saveBooksToCSV() {
         sortBooksByTitle();
 
-        try (FileWriter writer = new FileWriter("src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv", false)) {
+        try (FileWriter writer = new FileWriter("C:\\Users\\User\\IdeaProjects\\Test1Dec1\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv", false)) {
             // Write the CSV header (optional)
             writer.append("Title,Author,ISBN,Available,Borrower\n");
 
@@ -66,10 +71,8 @@ public class Library {
 
 
     public void addBook(String title, String author, String isbn, boolean isAvailable, String borrower) {
-
         // Add book to the list
         library.add(new Book(title, author, isbn, isAvailable, borrower));
-
         // Sort books after adding
         sortBooksByTitle();
         saveBooksToCSV();
@@ -79,8 +82,14 @@ public class Library {
         if (book.isAvailable()) {
             book.setAvailable(false);
             book.setBorrower(borrowerName);
+            // Update the book in the library list
+            for (int i = 0; i < library.size(); i++) {
+                if (library.get(i).getTitle().equals(book.getTitle())) {
+                    library.set(i, book);
+                    break;
+                }
+            }
             saveBooksToCSV();
-            //updateBookStatusInUI(bookToBorrow);
             controller.showAlert(Alert.AlertType.INFORMATION, "Book borrowed successfully.");
         } else {
             controller.showAlert(Alert.AlertType.WARNING, "Book is already borrowed.");
@@ -91,6 +100,12 @@ public class Library {
         if (!book.isAvailable()) {
             book.setAvailable(true);
             book.setBorrower("");
+            for (int i = 0; i < library.size(); i++) {
+                if (library.get(i).getTitle().equals(book.getTitle())) {
+                    library.set(i, book);
+                    break;
+                }
+            }
             saveBooksToCSV();
             //updateBookStatusInUI(bookToReturn);
             controller.showAlert(Alert.AlertType.INFORMATION, "Book returned successfully.");

@@ -68,7 +68,7 @@ public class MainController {
 
     // Initializes the controller
     public void initialize() {
-        library.loadBooksFromCSV("C:\\Users\\Koh\\Documents\\Java FX\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
+        library.loadBooksFromCSV("C:\\Users\\User\\IdeaProjects\\Test1Dec1\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv");
 
         // Set up button actions
         addBookButton.setOnAction(e -> showAddBookDialog());
@@ -150,12 +150,10 @@ public class MainController {
         onSearchBookButtonClick(new Book(bookName, author, isbn, true, ""));  // Add to UI
         clearFields();
         closeAddBookDialog();
+        dynamicResults.getChildren().clear();
     }
 
     private boolean isValidISBN(String isbn) {
-        // Implement ISBN validation logic here
-        // You can use regular expressions or other validation techniques
-        // For example, a simple check for 13 digits:
         return isbn.matches("\\d{9}");
     }
 
@@ -177,6 +175,29 @@ public class MainController {
         dynamicResults.add(MoreInfoButton, 2, rowIndex);
 
         adjustRowHeight(dynamicResults, rowIndex, 40); // Example height set to 40px
+    }
+
+    private void refreshSearchList(List<Book> books) {
+        dynamicResults.getChildren().clear();
+
+        for (Book book : books) {
+            // Create UI elements for each book
+            Circle resultStatus = new Circle(10, book.isAvailable() ? Color.GREEN : Color.RED);
+            Label resultLabel = new Label(book.getTitle());
+            Button moreInfoButton = new Button("More Info");
+
+            // Add event handlers for buttons
+            moreInfoButton.setOnAction(e -> handleMoreInfo(book.getTitle(), book.getAuthor(), book.getIsbn(), book.isAvailable()));
+
+            // Add components to the GridPane
+            int rowIndex = dynamicResults.getChildren().size() / 3;
+            dynamicResults.add(resultStatus, 0, rowIndex);
+            dynamicResults.add(resultLabel, 1, rowIndex);
+            dynamicResults.add(moreInfoButton, 2, rowIndex);
+
+            // Adjust row height (optional)
+            adjustRowHeight(dynamicResults, rowIndex, 40);
+        }
     }
 
     private void adjustRowHeight(GridPane gridPane, int rowIndex, double height) {
@@ -245,11 +266,18 @@ public class MainController {
         }
         library.borrowBook(bookToBorrow, borrowerName);
         BorrowDialog.setVisible(false);
+        borrowerNameField.clear();
+        refreshSearchList(library.getLibrary());
+
     }
+
     private void onReturnButtonClick(Book bookToReturn) {
         library.returnBook(bookToReturn);
+        refreshSearchList(library.getLibrary());
     }
+
     private void onDeleteButtonClick(String title) {
         library.deleteBook(title);
+        refreshSearchList(library.getLibrary());
     }
 }
