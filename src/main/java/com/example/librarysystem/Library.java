@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class Library {
 
     private final List<Book> library;
-
+    private final String fileName = "Library System Data.csv";
     public Library() {
         library = new ArrayList<>();
     }
@@ -27,7 +27,7 @@ public class Library {
     }
 
     // Read books from the CSV file into the array list
-    public void loadBooksFromCSV(String fileName) {
+    public void loadBooksFromCSV() {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             br.readLine(); // Skip header
@@ -51,7 +51,7 @@ public class Library {
     public void saveBooksToCSV() {
         sortBooksByTitle();
 
-        try (FileWriter writer = new FileWriter("C:\\Users\\User\\IdeaProjects\\Test1Dec1\\CAT-201-Asgmn1\\src\\main\\resources\\com\\example\\librarysystem\\Library System Data.csv", false)) {
+        try (FileWriter writer = new FileWriter(fileName, false)) {
             writer.append("Title,Author,ISBN,Available,Borrower\n");
 
             for (Book book : library) {
