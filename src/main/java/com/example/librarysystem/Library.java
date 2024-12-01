@@ -133,7 +133,9 @@ public class Library {
 
     public List<Book> filterBooks(String query) {
         return library.stream()
-                .filter(book -> book.getTitle().toLowerCase().contains(query.toLowerCase()) || book.getAuthor().toLowerCase().contains(query.toLowerCase()))
+                .filter(book -> book.getTitle().toLowerCase().contains(query.toLowerCase())
+                        || book.getAuthor().toLowerCase().contains(query.toLowerCase())
+                        || book.getIsbn().equals(query))
                 .collect(Collectors.toList());
     }
 

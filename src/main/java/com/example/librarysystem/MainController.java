@@ -224,6 +224,8 @@ public class MainController {
     // Closes the Add Book dialog
     private void closeAddBookDialog() {
         addBookDialog.setVisible(false);  // Hide Add Book dialog after adding the book
+        SearchPage.setVisible(true);
+        showAlert(Alert.AlertType.INFORMATION, "Book Added Successfully!");
     }
 
     // Displays an alert message
